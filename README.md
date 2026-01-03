@@ -11,8 +11,8 @@ Repo: https://github.com/piero7ov/ollama-rutinas-saludables
 
 - Formulario para ingresar **5 tipos de ejercicios** (ej: “cardio”, “yoga”, “fuerza”…)
 - Genera una rutina de **Lunes a Domingo**
-- Llama a la API local de Ollama: `http://localhost:11434/api/generate` :contentReference[oaicite:0]{index=0}
-- Puedes elegir **qué modelo (IA) usar**: llama3, qwen, mistral, gemma, etc. (siempre que lo tengas descargado en Ollama) :contentReference[oaicite:1]{index=1}
+- Llama a la API local de Ollama: `http://localhost:11434/api/generate`
+- Puedes elegir **qué modelo (IA) usar**: llama3, qwen, mistral, gemma, etc. (siempre que lo tengas descargado en Ollama)
 
 ---
 
@@ -35,14 +35,14 @@ Extras / pruebas:
 - **Ollama instalado**
 - **Al menos 1 modelo descargado** en Ollama (esto es clave)
 
-> Ojo: los modelos ocupan bastante espacio (decenas de GB en algunos casos). :contentReference[oaicite:2]{index=2}
+> Ojo: los modelos ocupan bastante espacio (decenas de GB en algunos casos).
 
 ---
 
 ## 🚀 Quick start (en 5 pasos)
 
-1) Instala Ollama (Windows o Linux, abajo tienes mini tutorial). :contentReference[oaicite:3]{index=3}  
-2) Descarga un modelo: `ollama pull llama3:latest` :contentReference[oaicite:4]{index=4}  
+1) Instala Ollama (Windows o Linux, abajo tienes mini tutorial).
+2) Descarga un modelo: `ollama pull llama3:latest`
 3) Copia el proyecto a tu servidor web (ej: `htdocs` en XAMPP).  
 4) Abre el formulario: `003-formulario de toma de datos.php`  
 5) Rellena los 5 tipos → **Generar Rutina** ✅
@@ -53,7 +53,7 @@ Extras / pruebas:
 
 ### 🪟 Windows
 
-1) Descarga e instala **Ollama para Windows** (instalador oficial). :contentReference[oaicite:5]{index=5}  
+1) Descarga e instala **Ollama para Windows** (instalador oficial).
 2) Abre **PowerShell** o **CMD** y verifica:
 ```bash
 ollama --version
@@ -121,7 +121,7 @@ ollama list
 
 ([GitHub][1])
 
-> Opcional (modo servidor): puedes configurar Ollama como servicio systemd. La doc oficial explica el `ollama serve` y el enfoque de servicio. ([docs.ollama.com][3])
+> Opcional (modo servidor): puedes configurar Ollama como servicio systemd. La doc oficial explica el `ollama serve` y el enfoque de servicio. 
 
 ---
 
@@ -169,7 +169,7 @@ Si pones un nombre que no existe en tu PC, te va a fallar o no va a responder.
 **1) “Error al conectar con la IA”**
 
 * Ollama no está corriendo (`ollama serve` en Linux o app activa en Windows)
-* Puerto/API no disponible: `http://localhost:11434` ([docs.ollama.com][4])
+* Puerto/API no disponible: `http://localhost:11434`
 
 **2) No tienes modelos descargados**
 
@@ -179,8 +179,6 @@ Si pones un nombre que no existe en tu PC, te va a fallar o no va a responder.
 ollama pull llama3:latest
 ollama list
 ```
-
-([GitHub][1])
 
 **3) Entraste directo a `004-calculaejercicios.php`**
 
@@ -197,5 +195,3 @@ La rutina generada es texto automático. Úsalo como guía general y ajusta a tu
 ## 👤 Autor
 
 Piero Olivares
-[3]: https://docs.ollama.com/cli?utm_source=chatgpt.com "CLI Reference"
-[4]: https://docs.ollama.com/api/authentication?utm_source=chatgpt.com "Authentication"
