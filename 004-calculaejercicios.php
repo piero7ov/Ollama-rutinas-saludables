@@ -40,10 +40,6 @@
             color: #475569;
             font-size: 1rem;
         }
-        .loading {
-            text-align: center;
-            color: #64748b;
-        }
         .btn-back {
             display: inline-block;
             margin-top: 2rem;
@@ -64,13 +60,36 @@
         <h1>🏋️ Tu Rutina Personalizada</h1>
         <div class="content">
 <?php
+// ✅ Si entran directo por URL (GET), mandarlo al formulario automáticamente
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    // OJO: como tu archivo tiene espacios, en Location es mejor usar %20
+    header("Location: 003-formulario%20de%20toma%20de%20datos.php");
+    exit;
+}
+
 // Endpoint local de Ollama
 $url = "http://localhost:11434/api/generate";
+
+// Tu lógica POST, pero sin warnings si falta algún campo
+$tipo1 = $_POST['tipo1'] ?? '';
+$tipo2 = $_POST['tipo2'] ?? '';
+$tipo3 = $_POST['tipo3'] ?? '';
+$tipo4 = $_POST['tipo4'] ?? '';
+$tipo5 = $_POST['tipo5'] ?? '';
+
+// (Recomendado) quitar vacíos para que no quede ", , ,"
+$tipos = array_filter([$tipo1, $tipo2, $tipo3, $tipo4, $tipo5], function($t){
+    return trim($t) !== '';
+});
+
+$tiposTexto = !empty($tipos)
+    ? implode(", ", $tipos)
+    : "cardio, fuerza, flexibilidad, movilidad y descanso activo";
 
 // Pregunta al modelo
 $data = [
     "model" => "llama3:latest",
-    "prompt" => "Genera una rutina de ejercicios para una vida saludable para una adulto a lo largo de una semana. Debe contener los siguientes dias: Lunes, Martes, Miercoles, Jueves, Viernes, Sabado y Domingo. Debe contener los siguientes tipos de ejercicios: ".$_POST['tipo1'].", ".$_POST['tipo2'].", ".$_POST['tipo3'].", ".$_POST['tipo4'].", ".$_POST['tipo5'].". en español.",
+    "prompt" => "Genera una rutina de ejercicios para una vida saludable para una adulto a lo largo de una semana. Debe contener los siguientes dias: Lunes, Martes, Miercoles, Jueves, Viernes, Sabado y Domingo. Debe contener los siguientes tipos de ejercicios: ".$tiposTexto.". en español.",
     "stream" => false
 ];
 
@@ -90,17 +109,23 @@ $response = curl_exec($ch);
 
 // Comprobar errores de cURL
 if ($response === false) {
-    echo "<p style='color:red'>Error al conectar con la IA: " . curl_error($ch) . "</p>";
+    echo "<p style='color:red'>Error al conectar con la IA: " . htmlspecialchars(curl_error($ch), ENT_QUOTES, "UTF-8") . "</p>";
 } else {
     // Decodificar la respuesta JSON
     $result = json_decode($response, true);
-    // Mostrar solo el texto generado
-    echo $result["response"];
+
+    if (!is_array($result) || !isset($result["response"])) {
+        echo "<p style='color:red'>La IA devolvió una respuesta inválida.</p>";
+    } else {
+        // Mostrar solo el texto generado
+        echo htmlspecialchars($result["response"], ENT_QUOTES, "UTF-8");
+    }
 }
 
 curl_close($ch);
 ?>
         </div>
+
         <div style="text-align: center;">
             <a href="003-formulario de toma de datos.php" class="btn-back">← Volver a crear otra rutina</a>
         </div>
